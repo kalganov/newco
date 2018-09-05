@@ -1,6 +1,7 @@
 package com.andreitop.newco.repository;
 
 import com.andreitop.newco.dto.TripDto;
+import com.andreitop.newco.exceptions.TripNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class TripRepository implements RepositoryGeneric<TripDto> {
         return trips.stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new TripNotFoundException(id));
     }
 
     public void save(final TripDto trip) {
@@ -28,16 +29,16 @@ public class TripRepository implements RepositoryGeneric<TripDto> {
     }
 
     public void delete(final Long id) {
-        trips.stream()
+        trips.remove(trips.stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst()
-                .ifPresent(trips::remove);
+                .orElseThrow(() -> new TripNotFoundException(id)));
     }
 
     public void update(final TripDto newTrip) {
-        trips.stream()
+        trips.set(trips.indexOf(trips.stream()
                 .filter(t -> t.getId().equals(newTrip.getId()))
                 .findFirst()
-                .ifPresent(t -> trips.set(trips.indexOf(t), newTrip));
+                .orElseThrow(() -> new TripNotFoundException(newTrip.getId()))), newTrip);
     }
 }

@@ -49,5 +49,4 @@ public class TripsController implements ControllerGeneric<TripDto> {
     public void update(@RequestBody final TripDto newTrip) {
         tripService.update(newTrip);
     }
-
 }
