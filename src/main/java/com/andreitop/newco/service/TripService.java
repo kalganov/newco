@@ -1,18 +1,19 @@
 package com.andreitop.newco.service;
 
 import com.andreitop.newco.dto.TripDto;
-import com.andreitop.newco.repository.TripRepository;
+import com.andreitop.newco.repository.RepositoryGeneric;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
-public class TripService {
+public class TripService implements ServiceGeneric<TripDto> {
 
-    private final TripRepository tripRepository;
+    private final RepositoryGeneric<TripDto> tripRepository;
 
     @Autowired
-    public TripService(TripRepository tripRepository) {
+    public TripService(RepositoryGeneric<TripDto> tripRepository) {
         this.tripRepository = tripRepository;
     }
 
